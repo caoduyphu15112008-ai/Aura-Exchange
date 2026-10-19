@@ -1,0 +1,1724 @@
+<!DOCTYPE html>
+<html lang="vi" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aura Exchange - Sàn Đổi Đồ Cũ & Tích Điểm Aura Gen Z</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        aura: {
+                            purple: '#7c3aed',
+                            purpleLight: '#8b5cf6',
+                            indigo: '#4f46e5',
+                            emerald: '#10b981',
+                            amber: '#f59e0b',
+                            rose: '#f43f5e',
+                            cyan: '#06b6d4',
+                            lightBg: '#f8fafc',
+                            lightCard: '#ffffff',
+                            lightBorder: 'rgba(124, 58, 237, 0.12)',
+                            darkBg: '#0f172a',
+                            darkCard: '#1e293b',
+                            darkBorder: 'rgba(255, 255, 255, 0.08)'
+                        }
+                    },
+                    boxShadow: {
+                        'glass-light': '0 10px 30px -10px rgba(124, 58, 237, 0.08), 0 4px 12px -2px rgba(0, 0, 0, 0.03)',
+                        'glass-dark': '0 20px 40px -15px rgba(0, 0, 0, 0.5), 0 0 1px 1px rgba(255, 255, 255, 0.05)',
+                        'vibrant': '0 8px 25px -5px rgba(124, 58, 237, 0.25)',
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts - Be Vietnam Pro -->
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- html2canvas for downloading Digital Card -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .font-heading-vi {
+            font-family: 'Be Vietnam Pro', 'Plus Jakarta Sans', sans-serif;
+        }
+        
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .light ::-webkit-scrollbar-thumb {
+            background: rgba(124, 58, 237, 0.25);
+            border-radius: 9999px;
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: rgba(124, 58, 237, 0.4);
+            border-radius: 9999px;
+        }
+
+        .glass-panel {
+            transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .light .glass-panel {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(124, 58, 237, 0.12);
+            box-shadow: 0 10px 30px -10px rgba(124, 58, 237, 0.08), 0 4px 6px -2px rgba(0,0,0,0.02);
+        }
+
+        .dark .glass-panel {
+            background: rgba(30, 41, 59, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.4);
+        }
+        
+        .light .glass-card {
+            background: #ffffff;
+            border: 1px solid rgba(124, 58, 237, 0.12);
+            box-shadow: 0 4px 20px rgba(124, 58, 237, 0.05);
+        }
+        .dark .glass-card {
+            background: #1e293b;
+            border: 1px solid rgba(255, 255, 255, 0.07);
+        }
+
+        /* Card Customizer Themes */
+        .card-theme-purple {
+            background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%);
+            color: #ffffff;
+        }
+        .card-theme-emerald {
+            background: linear-gradient(135deg, #059669 0%, #0d9488 100%);
+            color: #ffffff;
+        }
+        .card-theme-amber {
+            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+            color: #ffffff;
+        }
+        .card-theme-rose {
+            background: linear-gradient(135deg, #e11d48 0%, #c026d3 100%);
+            color: #ffffff;
+        }
+        .card-theme-dark {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #f8fafc;
+        }
+
+        #toast-container {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+    </style>
+</head>
+<body class="bg-aura-lightBg text-slate-800 dark:bg-aura-darkBg dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-300 relative overflow-x-hidden">
+
+    <!-- Background Canvas Particles -->
+    <canvas id="bg-canvas" class="fixed inset-0 pointer-events-none z-0 opacity-20 dark:opacity-30"></canvas>
+
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-50 glass-panel border-b border-slate-200/80 dark:border-slate-800/80 px-4 lg:px-8 py-3.5 transition-colors">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <!-- Brand Logo -->
+            <div class="flex items-center gap-3 cursor-pointer" onclick="switchTab('marketplace')">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-purple-600 via-indigo-500 to-emerald-400 p-[2px] shadow-md shadow-purple-500/20">
+                    <div class="w-full h-full bg-white dark:bg-slate-900 rounded-[10px] flex items-center justify-center">
+                        <span class="text-xl">✨</span>
+                    </div>
+                </div>
+                <div>
+                    <h1 class="font-heading-vi text-xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-indigo-600 to-emerald-500 dark:from-purple-400 dark:via-indigo-400 dark:to-emerald-400">
+                        AURA<span class="text-xs ml-1 px-2 py-0.5 rounded-full bg-purple-600/10 text-purple-700 dark:text-purple-300 border border-purple-500/20 font-bold">X</span>
+                    </h1>
+                    <p class="text-[10px] text-slate-500 dark:text-slate-400 font-bold tracking-wider uppercase">Re-use & Flex Your Aura</p>
+                </div>
+            </div>
+
+            <!-- Main Menu Links -->
+            <nav class="hidden md:flex items-center gap-1 bg-slate-100 dark:bg-slate-900/60 p-1.5 rounded-2xl border border-slate-200 dark:border-slate-800">
+                <button onclick="switchTab('marketplace')" id="nav-marketplace" class="nav-btn active flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition-all duration-200 bg-purple-600 text-white shadow-md shadow-purple-600/30">
+                    <i class="fa-solid fa-store"></i> Chợ Aura
+                </button>
+                <button onclick="switchTab('quests')" id="nav-quests" class="nav-btn flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition-all duration-200 text-slate-600 dark:text-slate-300 hover:text-purple-600 dark:hover:text-white">
+                    <i class="fa-solid fa-calendar-check text-emerald-500"></i> Quests & Streak
+                </button>
+                <button onclick="switchTab('impact')" id="nav-impact" class="nav-btn flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition-all duration-200 text-slate-600 dark:text-slate-300 hover:text-purple-600 dark:hover:text-white">
+                    <i class="fa-solid fa-leaf text-emerald-500"></i> Trình Tính Eco
+                </button>
+                <button onclick="switchTab('hubs')" id="nav-hubs" class="nav-btn flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition-all duration-200 text-slate-600 dark:text-slate-300 hover:text-purple-600 dark:hover:text-white">
+                    <i class="fa-solid fa-map-location-dot text-cyan-500"></i> Trạm Aura NEU
+                </button>
+                <button onclick="switchTab('leaderboard')" id="nav-leaderboard" class="nav-btn flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition-all duration-200 text-slate-600 dark:text-slate-300 hover:text-purple-600 dark:hover:text-white">
+                    <i class="fa-solid fa-trophy text-amber-500"></i> Top Aura
+                </button>
+                <button onclick="switchTab('mystery')" id="nav-mystery" class="nav-btn flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition-all duration-200 text-slate-600 dark:text-slate-300 hover:text-purple-600 dark:hover:text-white">
+                    <i class="fa-solid fa-box-open text-rose-500"></i> Mystery Box
+                </button>
+                <button onclick="switchTab('card')" id="nav-card" class="nav-btn flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition-all duration-200 text-slate-600 dark:text-slate-300 hover:text-purple-600 dark:hover:text-white">
+                    <i class="fa-solid fa-id-card text-indigo-500"></i> Trang Cá Nhân
+                </button>
+            </nav>
+
+            <!-- User Stat Pill & Light/Dark Switcher -->
+            <div class="flex items-center gap-2.5">
+                <!-- Aura Counter Pill -->
+                <div class="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-50 dark:bg-slate-800/80 border border-purple-500/20 text-slate-700 dark:text-slate-200 shadow-sm">
+                    <i class="fa-solid fa-bolt text-amber-500 animate-pulse"></i>
+                    <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">Aura:</span>
+                    <span id="user-aura-points" class="font-cyber font-extrabold text-purple-700 dark:text-amber-400 text-sm">2,450</span>
+                </div>
+
+                <!-- Light / Dark Theme Switcher -->
+                <button id="theme-toggle" class="flex items-center gap-2 px-3.5 py-1.5 rounded-2xl bg-amber-100/80 dark:bg-slate-800 border border-amber-300 dark:border-slate-700 hover:border-purple-500 transition-all duration-300 hover:scale-105 active:scale-95 shadow-sm" title="Chuyển Chế độ Sáng / Tối">
+                    <i id="theme-icon" class="fa-solid fa-sun text-amber-600 text-sm"></i>
+                    <span id="theme-text" class="text-xs font-bold text-amber-900 dark:text-slate-300 hidden sm:inline">LIGHT</span>
+                </button>
+
+                <!-- Post Item Button -->
+                <button onclick="openPostModal()" class="hidden sm:flex items-center gap-2 px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs shadow-md shadow-purple-600/20 hover:scale-105 active:scale-95 transition-all">
+                    <i class="fa-solid fa-plus-circle"></i> Đăng Đồ AI
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 lg:px-8 py-6 z-10">
+
+        <!-- GLOBAL COMMUNITY IMPACT BANNER -->
+        <div class="glass-panel rounded-2xl p-4 mb-6 border border-emerald-500/20 bg-gradient-to-r from-emerald-500/10 via-purple-500/5 to-indigo-500/10 flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-emerald-500 text-white flex items-center justify-center text-xl shadow-md">
+                    <i class="fa-solid fa-earth-americas"></i>
+                </div>
+                <div>
+                    <h4 class="font-heading-vi font-bold text-slate-900 dark:text-white text-xs md:text-sm">TÁC ĐỘNG MÔI TRƯỜNG CỦA CỘNG ĐỒNG AURA</h4>
+                    <p class="text-[11px] text-slate-500 dark:text-slate-400">Đồng hành tái chế đồ cũ - Giảm thiểu rác thải tiêu dùng Gen Z</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-3 gap-3 md:gap-6 text-center w-full md:w-auto">
+                <div class="px-3 py-1.5 rounded-xl bg-white/80 dark:bg-slate-900/80 border border-emerald-500/20">
+                    <p class="text-[10px] text-slate-500 dark:text-slate-400 font-bold uppercase">🌱 CO2 Giảm</p>
+                    <p id="global-co2" class="font-heading-vi font-black text-emerald-600 dark:text-emerald-400 text-sm md:text-base">1,420 kg</p>
+                </div>
+                <div class="px-3 py-1.5 rounded-xl bg-white/80 dark:bg-slate-900/80 border border-cyan-500/20">
+                    <p class="text-[10px] text-slate-500 dark:text-slate-400 font-bold uppercase">💧 Nước Tiết Kiệm</p>
+                    <p id="global-water" class="font-heading-vi font-black text-cyan-600 dark:text-cyan-400 text-sm md:text-base">8,500 Lít</p>
+                </div>
+                <div class="px-3 py-1.5 rounded-xl bg-white/80 dark:bg-slate-900/80 border border-amber-500/20">
+                    <p class="text-[10px] text-slate-500 dark:text-slate-400 font-bold uppercase">🌳 Cây Xanh</p>
+                    <p id="global-trees" class="font-heading-vi font-black text-amber-600 dark:text-amber-400 text-sm md:text-base">64 Cây</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 1: MARKETPLACE -->
+        <section id="tab-marketplace" class="tab-content block space-y-6">
+            <!-- Hero Banner -->
+            <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-purple-700 via-indigo-600 to-emerald-500 dark:from-purple-950 dark:via-slate-900 dark:to-indigo-950 text-white p-6 md:p-10 shadow-xl border border-purple-300/30">
+                <div class="relative z-10 max-w-2xl space-y-4">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md border border-white/20 text-white text-xs font-bold tracking-wide uppercase">
+                        <span>🌱 Sống Xanh & Tái Chế Gen Z</span>
+                    </div>
+                    <h2 class="font-heading-vi text-3xl sm:text-4xl md:text-5xl font-black text-white leading-tight tracking-tight">
+                        SÀN ĐỔI ĐỒ CŨ <br><span class="text-amber-300 drop-shadow-sm">TÍCH ĐIỂM AURA</span>
+                    </h2>
+                    <p class="text-purple-100 dark:text-slate-300 text-sm md:text-base leading-relaxed font-medium">
+                        Trao đổi quần áo vintage, decor, sách vở cũ để nâng tầm <strong class="text-amber-300 font-bold">Điểm Aura</strong>. Khẳng định phong cách sống bền vững & mở Mystery Box quà tặng cực đỉnh!
+                    </p>
+                    <div class="flex flex-wrap items-center gap-3 pt-2">
+                        <button onclick="openPostModal()" class="px-6 py-3 rounded-2xl bg-white text-purple-900 font-extrabold text-xs shadow-lg hover:bg-purple-50 transition-all flex items-center gap-2 hover:scale-105 active:scale-95">
+                            <i class="fa-solid fa-wand-magic-sparkles text-purple-600"></i> Đăng Đồ Với AI
+                        </button>
+                        <button onclick="switchTab('quests')" class="px-6 py-3 rounded-2xl bg-white/15 hover:bg-white/25 text-white border border-white/30 font-bold text-xs transition-all flex items-center gap-2 hover:scale-105 active:scale-95">
+                            <i class="fa-solid fa-calendar-check text-amber-300"></i> Điểm Danh Nhận Aura
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Categories & Search Bar -->
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4 glass-panel p-4 rounded-2xl">
+                <div class="flex items-center gap-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0 scrollbar-none">
+                    <button onclick="filterCategory('all')" class="cat-btn active px-4 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap bg-purple-600 text-white shadow-sm">
+                        Tất Cả
+                    </button>
+                    <button onclick="filterCategory('fashion')" class="cat-btn px-4 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-purple-100 dark:hover:bg-purple-900/40">
+                        👗 Thời Trang
+                    </button>
+                    <button onclick="filterCategory('decor')" class="cat-btn px-4 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-purple-100 dark:hover:bg-purple-900/40">
+                        🪴 Decor Phòng
+                    </button>
+                    <button onclick="filterCategory('books')" class="cat-btn px-4 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-purple-100 dark:hover:bg-purple-900/40">
+                        📚 Sách Vở
+                    </button>
+                    <button onclick="filterCategory('accessories')" class="cat-btn px-4 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-purple-100 dark:hover:bg-purple-900/40">
+                        🎧 Phụ Kiện & Tech
+                    </button>
+                </div>
+
+                <div class="relative w-full md:w-72">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                    <input type="text" id="search-input" onkeyup="handleSearch()" placeholder="Tìm món đồ Gen Z thích..." class="w-full bg-white dark:bg-slate-900/90 border border-purple-200 dark:border-slate-700 text-slate-900 dark:text-white text-xs rounded-xl pl-9 pr-4 py-2.5 focus:outline-none focus:border-purple-500 transition-colors shadow-sm">
+                </div>
+            </div>
+
+            <!-- Items Marketplace Grid -->
+            <div id="items-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <!-- Dynamically populated cards -->
+            </div>
+        </section>
+
+        <!-- TAB 2: AURA QUESTS & DAILY STREAK -->
+        <section id="tab-quests" class="tab-content hidden space-y-6 max-w-4xl mx-auto">
+            <div class="text-center space-y-2">
+                <span class="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20 text-xs font-bold uppercase tracking-wider">
+                    ⚡ Daily Gamification
+                </span>
+                <h2 class="font-heading-vi text-2xl md:text-3xl font-black text-slate-900 dark:text-white">
+                    CHUỖI ĐIỂM DANH & NHIỆM VỤ XANH
+                </h2>
+                <p class="text-slate-600 dark:text-slate-400 text-xs md:text-sm">
+                    Duy trì Streak hàng ngày & hoàn thành nhiệm vụ sinh thái để tích lũy điểm Aura siêu nhanh!
+                </p>
+            </div>
+
+            <div class="glass-panel rounded-3xl p-6 shadow-xl space-y-6">
+                <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-2xl bg-amber-500/10 text-amber-500 flex items-center justify-center text-2xl shadow-inner">
+                            <i class="fa-solid fa-fire animate-bounce"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-heading-vi font-extrabold text-slate-900 dark:text-white text-base">Chuỗi Streak: <span id="streak-days-count" class="text-amber-500 font-black">4 Ngày</span></h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Đã nhận tổng cộng +240 Aura từ Streak!</p>
+                        </div>
+                    </div>
+                    <button id="btn-claim-streak" onclick="claimDailyStreak()" class="px-5 py-2.5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-md shadow-emerald-600/20 transition-all hover:scale-105 active:scale-95">
+                        <i class="fa-solid fa-calendar-check"></i> Điểm Danh Hôm Nay (+40 Aura)
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-7 gap-2 text-center">
+                    <div class="p-3 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400">
+                        <p class="text-[10px] font-bold">Ngày 1</p>
+                        <i class="fa-solid fa-check text-xs my-1"></i>
+                        <p class="text-[10px] font-black">+10</p>
+                    </div>
+                    <div class="p-3 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400">
+                        <p class="text-[10px] font-bold">Ngày 2</p>
+                        <i class="fa-solid fa-check text-xs my-1"></i>
+                        <p class="text-[10px] font-black">+20</p>
+                    </div>
+                    <div class="p-3 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400">
+                        <p class="text-[10px] font-bold">Ngày 3</p>
+                        <i class="fa-solid fa-check text-xs my-1"></i>
+                        <p class="text-[10px] font-black">+30</p>
+                    </div>
+                    <div class="p-3 rounded-2xl bg-amber-500/20 border-2 border-amber-500 text-amber-600 dark:text-amber-400 shadow-sm animate-pulse">
+                        <p class="text-[10px] font-bold">Ngày 4</p>
+                        <i class="fa-solid fa-bolt text-xs my-1"></i>
+                        <p class="text-[10px] font-black">+40</p>
+                    </div>
+                    <div class="p-3 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-400">
+                        <p class="text-[10px] font-bold">Ngày 5</p>
+                        <i class="fa-solid fa-lock text-xs my-1"></i>
+                        <p class="text-[10px] font-black">+50</p>
+                    </div>
+                    <div class="p-3 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-400">
+                        <p class="text-[10px] font-bold">Ngày 6</p>
+                        <i class="fa-solid fa-lock text-xs my-1"></i>
+                        <p class="text-[10px] font-black">+60</p>
+                    </div>
+                    <div class="p-3 rounded-2xl bg-purple-500/10 border border-purple-500/30 text-purple-600 dark:text-purple-400">
+                        <p class="text-[10px] font-bold">Ngày 7</p>
+                        <i class="fa-solid fa-gift text-xs my-1"></i>
+                        <p class="text-[10px] font-black">Mystery Box</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-4">
+                <h3 class="font-heading-vi font-bold text-slate-900 dark:text-white text-base flex items-center gap-2">
+                    <i class="fa-solid fa-tasks text-purple-600"></i> Nhiệm Vụ Sinh Thái Hôm Nay
+                </h3>
+                <div class="space-y-3" id="quests-list"></div>
+            </div>
+        </section>
+
+        <!-- TAB 3: ECO IMPACT CALCULATOR -->
+        <section id="tab-impact" class="tab-content hidden space-y-6 max-w-4xl mx-auto">
+            <div class="text-center space-y-2">
+                <span class="px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-700 dark:text-cyan-400 border border-cyan-500/20 text-xs font-bold uppercase tracking-wider">
+                    🧮 Carbon Calculator
+                </span>
+                <h2 class="font-heading-vi text-2xl md:text-3xl font-black text-slate-900 dark:text-white">
+                    TRÌNH TÍNH TÁC ĐỘNG MÔI TRƯỜNG CÁ NHÂN
+                </h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="glass-panel p-6 rounded-3xl space-y-4 shadow-lg">
+                    <h3 class="font-heading-vi font-bold text-slate-900 dark:text-white text-sm flex items-center gap-2">
+                        <i class="fa-solid fa-sliders text-cyan-500"></i> Nhập Số Lượng Đồ Cũ Bạn Đã Đổi
+                    </h3>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">👗 Q.Áo & Thời Trang (Món)</label>
+                        <input type="number" id="calc-fashion" value="8" min="0" onchange="calculatePersonalImpact()" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3.5 py-2 text-slate-900 dark:text-white text-xs">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">🪴 Đồ Decor & Gia Dụng (Món)</label>
+                        <input type="number" id="calc-decor" value="4" min="0" onchange="calculatePersonalImpact()" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3.5 py-2 text-slate-900 dark:text-white text-xs">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">📚 Sách Vở & Truyện (Quyển)</label>
+                        <input type="number" id="calc-books" value="6" min="0" onchange="calculatePersonalImpact()" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3.5 py-2 text-slate-900 dark:text-white text-xs">
+                    </div>
+                </div>
+
+                <div class="glass-panel p-6 rounded-3xl space-y-6 shadow-lg bg-gradient-to-br from-emerald-500/10 via-purple-500/5 to-cyan-500/10 flex flex-col justify-between">
+                    <div>
+                        <h3 class="font-heading-vi font-bold text-slate-900 dark:text-white text-sm mb-4 flex items-center gap-2">
+                            <i class="fa-solid fa-chart-pie text-emerald-500"></i> Thành Tích Tác Động Của Bạn
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="p-3.5 rounded-2xl bg-white/90 dark:bg-slate-900/90 border border-emerald-500/20 flex items-center justify-between">
+                                <div>
+                                    <p class="text-[10px] text-slate-500 dark:text-slate-400 font-bold uppercase">Lượng Khí CO2 Giảm</p>
+                                    <p id="calc-co2-result" class="font-heading-vi font-black text-emerald-600 dark:text-emerald-400 text-lg">42.5 kg</p>
+                                </div>
+                                <span class="text-[10px] text-emerald-600 font-bold bg-emerald-500/10 px-2 py-1 rounded-full">≈ 120km lái xe</span>
+                            </div>
+                            <div class="p-3.5 rounded-2xl bg-white/90 dark:bg-slate-900/90 border border-cyan-500/20 flex items-center justify-between">
+                                <div>
+                                    <p class="text-[10px] text-slate-500 dark:text-slate-400 font-bold uppercase">Tiết Kiệm Nước</p>
+                                    <p id="calc-water-result" class="font-heading-vi font-black text-cyan-600 dark:text-cyan-400 text-lg">21,400 Lít</p>
+                                </div>
+                                <span class="text-[10px] text-cyan-600 font-bold bg-cyan-500/10 px-2 py-1 rounded-full">≈ 280 Lần tắm</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="shareImpactCertificate()" class="w-full py-3 rounded-2xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs shadow-md shadow-purple-600/20 transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-share-nodes"></i> Chia Sẻ Chứng Nhận Eco
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 4: AURA SAFE HUBS (GOOGLE MAPS INTEGRATION) -->
+        <section id="tab-hubs" class="tab-content hidden space-y-6 max-w-5xl mx-auto">
+            <div class="text-center space-y-2">
+                <span class="px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-700 dark:text-cyan-400 border border-cyan-500/20 text-xs font-bold uppercase tracking-wider">
+                    📍 Live Safe Exchange Spots
+                </span>
+                <h2 class="font-heading-vi text-2xl md:text-3xl font-black text-slate-900 dark:text-white">
+                    TRẠM ĐỔI ĐỒ AN TOÀN AURA SAFE HUBS & GOOGLE MAPS
+                </h2>
+                <p class="text-xs text-slate-500 dark:text-slate-400">Định vị trực tiếp điểm hẹn trao đổi uy tín tại các trường Đại học & Chuỗi Cafe Gen Z</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <!-- Left Station Selector -->
+                <div class="lg:col-span-5 space-y-3">
+                    <h3 class="font-heading-vi font-bold text-slate-900 dark:text-white text-sm mb-2 flex items-center justify-between">
+                        <span>Danh Sách Trạm Trực Thuộc</span>
+                        <span class="text-[10px] text-emerald-500 font-semibold"><i class="fa-solid fa-circle text-[8px] mr-1"></i> Live Active</span>
+                    </h3>
+                    
+                    <div id="stations-container" class="space-y-3">
+                        <!-- Station Item 1: NEU -->
+                        <div id="station-card-1" onclick="selectStation(1)" class="p-4 rounded-2xl glass-panel border-l-4 border-purple-600 cursor-pointer hover:bg-purple-50 dark:hover:bg-slate-800 transition-all shadow-sm">
+                            <div class="flex justify-between items-start">
+                                <span class="text-[10px] font-extrabold text-purple-600 dark:text-purple-400 uppercase tracking-wider">Trường Đại Học</span>
+                                <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-600 font-bold">Trạm Chính</span>
+                            </div>
+                            <h4 class="font-bold text-slate-900 dark:text-white text-sm mt-1">Aura Hub ĐH Kinh Tế Quốc Dân (NEU)</h4>
+                            <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1 flex items-center gap-1">
+                                <i class="fa-solid fa-location-dot text-rose-500"></i> Toà A2, 207 Giải Phóng, Hai Bà Trưng, Hà Nội
+                            </p>
+                            <div class="mt-3 pt-2 border-t border-slate-200 dark:border-slate-800 grid grid-cols-2 gap-2 text-[10px] text-slate-600 dark:text-slate-300">
+                                <div><i class="fa-regular fa-clock text-purple-500 mr-1"></i> 07:30 - 21:00</div>
+                                <div><i class="fa-solid fa-box text-purple-500 mr-1"></i> 24 Tủ đồ thông minh</div>
+                            </div>
+                        </div>
+
+                        <!-- Station Item 2: Coffee Spot -->
+                        <div id="station-card-2" onclick="selectStation(2)" class="p-4 rounded-2xl glass-panel border-l-4 border-emerald-500 cursor-pointer hover:bg-purple-50 dark:hover:bg-slate-800 transition-all shadow-sm opacity-80 hover:opacity-100">
+                            <div class="flex justify-between items-start">
+                                <span class="text-[10px] font-extrabold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">Local Coffee Partner</span>
+                                <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-600 font-bold">Đối Tác Cafe</span>
+                            </div>
+                            <h4 class="font-bold text-slate-900 dark:text-white text-sm mt-1">Aura Spot - Coffee House Chùa Bộc</h4>
+                            <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1 flex items-center gap-1">
+                                <i class="fa-solid fa-location-dot text-rose-500"></i> 12 Chùa Bộc, Đống Đa, Hà Nội
+                            </p>
+                            <div class="mt-3 pt-2 border-t border-slate-200 dark:border-slate-800 grid grid-cols-2 gap-2 text-[10px] text-slate-600 dark:text-slate-300">
+                                <div><i class="fa-regular fa-clock text-emerald-500 mr-1"></i> 07:00 - 22:30</div>
+                                <div><i class="fa-solid fa-mug-hot text-emerald-500 mr-1"></i> Giảm 15% Nước uống</div>
+                            </div>
+                        </div>
+
+                        <!-- Station Item 3: Bach Khoa -->
+                        <div id="station-card-3" onclick="selectStation(3)" class="p-4 rounded-2xl glass-panel border-l-4 border-indigo-500 cursor-pointer hover:bg-purple-50 dark:hover:bg-slate-800 transition-all shadow-sm opacity-80 hover:opacity-100">
+                            <div class="flex justify-between items-start">
+                                <span class="text-[10px] font-extrabold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider">Trường Đại Học</span>
+                                <span class="text-[10px] px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-600 font-bold">Thư Viện HUST</span>
+                            </div>
+                            <h4 class="font-bold text-slate-900 dark:text-white text-sm mt-1">Aura Spot - Thư Viện Tạ Quang Bửu (HUST)</h4>
+                            <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1 flex items-center gap-1">
+                                <i class="fa-solid fa-location-dot text-rose-500"></i> Số 1 Đại Cồ Việt, Hai Bà Trưng, Hà Nội
+                            </p>
+                            <div class="mt-3 pt-2 border-t border-slate-200 dark:border-slate-800 grid grid-cols-2 gap-2 text-[10px] text-slate-600 dark:text-slate-300">
+                                <div><i class="fa-regular fa-clock text-indigo-500 mr-1"></i> 08:00 - 20:00</div>
+                                <div><i class="fa-solid fa-book-open text-indigo-500 mr-1"></i> Trạm sách giáo trình</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Live Map Frame -->
+                <div class="lg:col-span-7 glass-panel rounded-3xl p-4 flex flex-col justify-between min-h-[420px] relative overflow-hidden bg-slate-100 dark:bg-slate-900 border border-purple-200 dark:border-slate-800 shadow-xl">
+                    <!-- Map Controls Bar -->
+                    <div class="relative z-10 flex flex-wrap items-center justify-between gap-2 mb-3 bg-white/80 dark:bg-slate-950/80 p-2.5 rounded-2xl backdrop-blur-md border border-slate-200 dark:border-slate-800">
+                        <div class="flex items-center gap-2">
+                            <span class="w-3 h-3 rounded-full bg-rose-500 animate-ping"></span>
+                            <span id="active-station-title" class="font-bold text-slate-900 dark:text-white text-xs">
+                                Trạm NEU A2 (207 Giải Phóng)
+                            </span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button onclick="locateNearestStation()" class="px-3 py-1.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold shadow-md transition-all flex items-center gap-1.5">
+                                <i class="fa-solid fa-crosshairs"></i> Định Vị Tôi
+                            </button>
+                            <a id="btn-directions-link" href="https://www.google.com/maps/dir/?api=1&destination=207+Giai+Phong+Hai+Ba+Trung+Hanoi" target="_blank" class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-md transition-all flex items-center gap-1.5">
+                                <i class="fa-solid fa-route"></i> Chỉ Đường GG Map
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Embedded Google Maps iFrame -->
+                    <div class="relative w-full flex-1 rounded-2xl overflow-hidden border border-slate-300 dark:border-slate-700 shadow-inner">
+                        <iframe id="google-maps-iframe" 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.6318853198886!2d105.84074507599787!3d21.00238498851415!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ac71231f479d%3A0xe13c690240368173!2sNational%20Economics%20University!5e0!3m2!1sen!2svn!4v1700000000000!5m2!1sen!2svn" 
+                            class="w-full h-full min-h-[320px] border-0" 
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+
+                    <!-- Station Info Footer -->
+                    <div class="mt-3 p-3 rounded-2xl bg-white/90 dark:bg-slate-950/90 border border-purple-100 dark:border-slate-800 text-xs flex items-center justify-between">
+                        <span id="active-station-detail" class="text-slate-600 dark:text-slate-400">
+                            📍 Sảnh Toà nhà A2, Đại học Kinh tế Quốc dân - Hotline Trạm: <strong class="text-purple-600 dark:text-purple-400 font-bold">0988.123.456</strong>
+                        </span>
+                        <span class="text-[10px] bg-purple-500/10 text-purple-700 dark:text-purple-300 font-bold px-2.5 py-1 rounded-full border border-purple-500/20">
+                            Miễn phí gửi đồ Aura 24/7
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 5: LEADERBOARD -->
+        <section id="tab-leaderboard" class="tab-content hidden space-y-6 max-w-5xl mx-auto">
+            <div class="text-center space-y-2">
+                <span class="px-3 py-1 rounded-full bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/20 text-xs font-bold uppercase tracking-wider">
+                    🏆 Bang Hội Thần Thái & Top Tái Chế
+                </span>
+                <h2 class="font-heading-vi text-2xl md:text-3xl font-black text-slate-900 dark:text-white">
+                    BẢNG XẾP HẠNG TOP AURA GODS
+                </h2>
+                <p class="text-xs text-slate-500 dark:text-slate-400">Thi đua tích lũy Aura & lan tỏa phong cách sống xanh giữa các trường Đại học</p>
+            </div>
+
+            <!-- Leaderboard Controls & Filters -->
+            <div class="glass-panel p-4 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4 border border-purple-200 dark:border-slate-800">
+                <!-- Time Filter Pills -->
+                <div class="flex items-center gap-1 bg-slate-100 dark:bg-slate-900 p-1 rounded-xl w-full sm:w-auto">
+                    <button onclick="filterLeaderboardTime('all')" id="lb-time-all" class="lb-time-btn active px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-purple-600 text-white shadow">
+                        Tất Cả Thời Gian
+                    </button>
+                    <button onclick="filterLeaderboardTime('month')" id="lb-time-month" class="lb-time-btn px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all text-slate-600 dark:text-slate-400 hover:text-purple-600">
+                        Tháng Bảy
+                    </button>
+                    <button onclick="filterLeaderboardTime('week')" id="lb-time-week" class="lb-time-btn px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all text-slate-600 dark:text-slate-400 hover:text-purple-600">
+                        Tuần Này
+                    </button>
+                </div>
+
+                <!-- School / Location Filter Dropdown -->
+                <div class="flex items-center gap-2 w-full sm:w-auto justify-end">
+                    <i class="fa-solid fa-filter text-purple-600 text-xs"></i>
+                    <select id="lb-school-select" onchange="renderLeaderboard()" class="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white text-xs font-semibold rounded-xl px-3 py-2 focus:outline-none focus:border-purple-500">
+                        <option value="all">Tất Cả Các Trường (Toàn Quốc)</option>
+                        <option value="NEU">ĐH Kinh Tế Quốc Dân (NEU)</option>
+                        <option value="HUST">ĐH Bách Khoa Hà Nội (HUST)</option>
+                        <option value="FTU">ĐH Ngoại Thương (FTU)</option>
+                        <option value="ULIS">ĐH Ngoại Ngữ (ULIS)</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Top 1 - Top 2 - Top 3 Podium Cards -->
+            <div id="top-podium-container" class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+                <!-- Podium dynamically injected -->
+            </div>
+
+            <!-- Sticky Personal Rank Highlight Banner -->
+            <div id="personal-rank-banner" class="glass-panel p-4 rounded-2xl border-2 border-amber-500/50 bg-gradient-to-r from-amber-500/10 via-purple-500/10 to-indigo-500/10 flex items-center justify-between shadow-lg my-4">
+                <!-- Personal Rank Row Details -->
+            </div>
+
+            <!-- Top 4 -> Top 10+ Leaderboard Table -->
+            <div class="glass-panel rounded-3xl overflow-hidden shadow-xl border border-purple-100 dark:border-slate-800">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs">
+                        <thead class="bg-purple-50 dark:bg-slate-900/80 text-purple-900 dark:text-purple-300 font-bold uppercase tracking-wider border-b border-purple-100 dark:border-slate-800">
+                            <tr>
+                                <th class="p-3.5 text-center w-16">Hạng</th>
+                                <th class="p-3.5">Thành Viên</th>
+                                <th class="p-3.5 hidden md:table-cell">Trường / Đơn Vị</th>
+                                <th class="p-3.5 text-center">Đồ Tái Chế</th>
+                                <th class="p-3.5 text-center">Streak</th>
+                                <th class="p-3.5 text-right pr-6">Điểm Aura</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leaderboard-table-body" class="divide-y divide-slate-200 dark:divide-slate-800">
+                            <!-- Dynamic Leaderboard Rows -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 6: MYSTERY BOX -->
+        <section id="tab-mystery" class="tab-content hidden space-y-8 max-w-4xl mx-auto text-center">
+            <div class="space-y-2">
+                <span class="px-3 py-1 rounded-full bg-rose-500/10 text-rose-700 dark:text-rose-400 border border-rose-500/20 text-xs font-bold uppercase tracking-wider">
+                    🎁 Reward Store
+                </span>
+                <h2 class="font-heading-vi text-2xl md:text-4xl font-black text-slate-900 dark:text-white">
+                    HỘP QUÀ BÍ MẬT - MYSTERY BOX
+                </h2>
+            </div>
+
+            <div class="glass-panel rounded-3xl p-8 shadow-xl flex flex-col items-center justify-center space-y-6 relative overflow-hidden">
+                <div id="box-wrapper" class="relative group cursor-pointer transition-transform duration-300 hover:scale-105" onclick="openMysteryBox()">
+                    <div class="w-48 h-48 md:w-56 md:h-56 rounded-3xl bg-gradient-to-tr from-purple-600 via-indigo-500 to-rose-500 p-1 shadow-xl flex items-center justify-center">
+                        <div class="w-full h-full bg-white dark:bg-slate-900 rounded-[22px] flex flex-col items-center justify-center p-4 text-center">
+                            <i id="box-icon" class="fa-solid fa-box-open text-6xl text-amber-400 animate-bounce"></i>
+                            <span class="font-cyber text-[10px] uppercase tracking-widest text-purple-700 dark:text-purple-300 mt-4 font-bold">NHẤN ĐỂ MỞ HỘP</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-3 z-10">
+                    <p class="text-xs text-slate-600 dark:text-slate-400 font-semibold">Chi phí: <strong class="text-amber-600 font-bold text-sm">300 AURA</strong></p>
+                    <button id="btn-open-box" onclick="openMysteryBox()" class="px-8 py-3.5 rounded-2xl bg-purple-600 hover:bg-purple-700 text-white font-extrabold text-xs shadow-lg shadow-purple-600/30 transition-all">
+                        ✨ MỞ HỘP QUÀ NGAY
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 7: DIGITAL AURA CARD & EXPANDED PROFILE CUSTOMIZATION -->
+        <section id="tab-card" class="tab-content hidden space-y-6 max-w-4xl mx-auto">
+            <div class="text-center space-y-2">
+                <span class="px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-700 dark:text-indigo-400 border border-indigo-500/20 text-xs font-bold uppercase tracking-wider">
+                    🎴 Digital Identity & Profile Editor
+                </span>
+                <h2 class="font-heading-vi text-2xl md:text-3xl font-black text-slate-900 dark:text-white">
+                    CHỈNH SỬA TRANG CÁ NHÂN & THẺ AURA VIP
+                </h2>
+                <p class="text-slate-600 dark:text-slate-400 text-xs">
+                    Cập nhật đầy đủ hồ sơ cá nhân, liên hệ & chọn giao diện Thẻ thần thái Gen Z!
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <!-- Profile & Card Customizer Form (Left - 7 cols) -->
+                <div class="lg:col-span-7 glass-panel p-6 rounded-3xl space-y-5 border border-purple-200 dark:border-slate-800 shadow-xl">
+                    <h3 class="font-heading-vi font-bold text-slate-900 dark:text-white text-sm flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
+                        <span class="flex items-center gap-2"><i class="fa-solid fa-user-pen text-purple-600"></i> Thông Tin Hồ Sơ Cá Nhân</span>
+                        <span class="text-[10px] text-emerald-500 font-bold"><i class="fa-solid fa-check-circle"></i> Tự động lưu</span>
+                    </h3>
+
+                    <form id="profile-editor-form" onsubmit="saveProfileChanges(event)" class="space-y-4 text-xs">
+                        <!-- Name & School -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Tên Hiển Thị (Nickname)</label>
+                                <input type="text" id="edit-user-name" required oninput="updateProfileLive()" placeholder="VD: Minh Đức" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3.5 py-2 text-slate-900 dark:text-white focus:outline-none focus:border-purple-500 shadow-sm">
+                            </div>
+                            <div>
+                                <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Trường / Đơn Vị</label>
+                                <input type="text" id="edit-user-school" oninput="updateProfileLive()" placeholder="VD: NEU, HUST, FTU..." class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3.5 py-2 text-slate-900 dark:text-white focus:outline-none focus:border-purple-500 shadow-sm">
+                            </div>
+                        </div>
+
+                        <!-- Bio Description -->
+                        <div>
+                            <div class="flex justify-between items-center mb-1">
+                                <label class="font-semibold text-slate-700 dark:text-slate-300">Bio / Giới Thiệu Bản Thân</label>
+                                <button type="button" onclick="generateAIPersona()" class="text-[10px] font-bold text-purple-600 dark:text-purple-400 hover:underline flex items-center gap-1">
+                                    <i class="fa-solid fa-wand-magic-sparkles text-amber-500"></i> AI Tạo Bio Gen Z
+                                </button>
+                            </div>
+                            <textarea id="edit-user-bio" rows="2" oninput="updateProfileLive()" placeholder="Câu châm ngôn tái chế hay sở thích cá nhân..." class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3.5 py-2 text-slate-900 dark:text-white focus:outline-none focus:border-purple-500 shadow-sm"></textarea>
+                        </div>
+
+                        <!-- Contact Phone & Social Handles -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">SĐT / Zalo Hẹn Giao Dịch</label>
+                                <input type="text" id="edit-user-phone" oninput="updateProfileLive()" placeholder="VD: 0912 xxx xxx" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3.5 py-2 text-slate-900 dark:text-white focus:outline-none focus:border-purple-500 shadow-sm">
+                            </div>
+                            <div>
+                                <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Instagram / TikTok Handle</label>
+                                <input type="text" id="edit-user-social" oninput="updateProfileLive()" placeholder="@duc.neu.vintage" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3.5 py-2 text-slate-900 dark:text-white focus:outline-none focus:border-purple-500 shadow-sm">
+                            </div>
+                        </div>
+
+                        <!-- Card Theme Selector -->
+                        <div>
+                            <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-2">Màu Nền Thẻ VIP Card:</label>
+                            <div class="flex items-center gap-2">
+                                <button type="button" onclick="changeCardTheme('purple')" class="w-7 h-7 rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 border-2 border-white shadow-md focus:ring-2 focus:ring-purple-500"></button>
+                                <button type="button" onclick="changeCardTheme('emerald')" class="w-7 h-7 rounded-full bg-gradient-to-r from-emerald-600 to-teal-600 border-2 border-white shadow-md focus:ring-2 focus:ring-emerald-500"></button>
+                                <button type="button" onclick="changeCardTheme('amber')" class="w-7 h-7 rounded-full bg-gradient-to-r from-amber-500 to-orange-600 border-2 border-white shadow-md focus:ring-2 focus:ring-amber-500"></button>
+                                <button type="button" onclick="changeCardTheme('rose')" class="w-7 h-7 rounded-full bg-gradient-to-r from-rose-600 to-fuchsia-600 border-2 border-white shadow-md focus:ring-2 focus:ring-rose-500"></button>
+                                <button type="button" onclick="changeCardTheme('dark')" class="w-7 h-7 rounded-full bg-gradient-to-r from-slate-900 to-slate-800 border-2 border-white shadow-md focus:ring-2 focus:ring-slate-500"></button>
+                            </div>
+                        </div>
+
+                        <!-- Preset Avatars & Upload File -->
+                        <div class="space-y-2 pt-1 border-t border-slate-200 dark:border-slate-800">
+                            <label class="block font-semibold text-slate-700 dark:text-slate-300">Chọn Avatar Gen Z Sẵn Có Hoặc Tải Lên:</label>
+                            <div class="flex items-center gap-2.5 overflow-x-auto pb-1 scrollbar-none" id="preset-avatars-container"></div>
+
+                            <div class="mt-2">
+                                <input type="file" id="upload-avatar-file" accept="image/*" onchange="handleAvatarUpload(event)" class="w-full text-xs text-slate-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-purple-100 file:text-purple-700 hover:file:bg-purple-200">
+                            </div>
+                        </div>
+
+                        <button type="submit" class="w-full py-3 rounded-2xl bg-purple-600 hover:bg-purple-700 text-white font-extrabold text-xs shadow-md shadow-purple-600/30 transition-all flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-floppy-disk"></i> Lưu Thay Đổi Hồ Sơ
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Live Preview Aura VIP Card (Right - 5 cols) -->
+                <div class="lg:col-span-5 flex flex-col justify-between space-y-4">
+                    <!-- Live Digital Aura Card Frame -->
+                    <div id="digital-aura-card" class="card-theme-purple rounded-3xl p-6 shadow-2xl border border-white/20 relative overflow-hidden transition-all duration-300">
+                        <div class="absolute -right-12 -bottom-12 w-40 h-40 rounded-full bg-white/10 blur-xl pointer-events-none"></div>
+
+                        <div class="relative z-10 space-y-5">
+                            <div class="flex items-center justify-between border-b border-white/20 pb-3">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse"></span>
+                                    <span class="font-cyber font-bold text-[11px] tracking-wider uppercase text-white/90">AURA VIP CARD // GEN-Z ID</span>
+                                </div>
+                                <span class="text-[9px] text-amber-300 font-extrabold bg-black/20 px-2 py-0.5 rounded-full border border-white/10">
+                                    VERIFIED MEMBER
+                                </span>
+                            </div>
+
+                            <div class="flex items-center gap-4">
+                                <img id="card-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80" alt="Avatar" class="w-20 h-20 rounded-2xl object-cover border-2 border-white/40 shadow-lg">
+                                <div class="space-y-1">
+                                    <h3 id="card-username" class="font-cyber text-xl font-bold tracking-wide">Minh Đức</h3>
+                                    <p id="card-school-badge" class="text-xs text-white/80 font-medium">ĐH Kinh Tế Quốc Dân (NEU)</p>
+                                    <div class="flex items-center gap-2 pt-0.5">
+                                        <span class="px-2.5 py-0.5 rounded-full bg-black/30 text-white text-[10px] font-bold border border-white/10">
+                                            👑 <span id="card-rank-title" class="text-amber-300">Aura God</span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="p-3.5 rounded-2xl bg-black/20 backdrop-blur-md border border-white/10 text-xs space-y-1">
+                                <p class="text-[10px] uppercase font-bold text-amber-300 flex items-center gap-1">
+                                    <i class="fa-solid fa-sparkles"></i> AI AURA BIO
+                                </p>
+                                <p id="card-ai-bio" class="italic text-[11px] text-white/90 leading-relaxed">
+                                    "Thánh tái chế Gen Z, chuyên săn đồ Vintage & lan tỏa lối sống xanh cùng Aura."
+                                </p>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-3 p-3.5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/10 text-center">
+                                <div>
+                                    <p class="text-[9px] uppercase tracking-wider text-white/70 font-bold">Điểm Aura Tích Lũy</p>
+                                    <p id="card-points" class="font-cyber text-xl font-black text-amber-300">2,450</p>
+                                </div>
+                                <div>
+                                    <p class="text-[9px] uppercase tracking-wider text-white/70 font-bold">Món Đồ Đã Đổi</p>
+                                    <p class="font-cyber text-xl font-black text-white">18 món</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center justify-between text-[10px] text-white/80 pt-1 border-t border-white/15">
+                                <span id="card-social-handle"><i class="fa-brands fa-instagram mr-1"></i> @duc.neu.vintage</span>
+                                <span id="card-phone-number"><i class="fa-solid fa-phone mr-1"></i> 0912 *** ***</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-3">
+                        <button onclick="downloadDigitalCard()" class="flex-1 py-3.5 rounded-2xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs shadow-md shadow-purple-600/20 flex items-center justify-center gap-2 transition-all hover:scale-105 active:scale-95">
+                            <i class="fa-solid fa-download"></i> Tải Thẻ Digital Card
+                        </button>
+                        <button onclick="shareToStory()" class="flex-1 py-3.5 rounded-2xl bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 border border-slate-300 dark:border-slate-700 font-bold text-xs flex items-center justify-center gap-2 transition-all hover:scale-105 active:scale-95">
+                            <i class="fa-solid fa-share-nodes"></i> Chia Sẻ Story
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- MODAL 1: POST NEW ITEM -->
+    <div id="modal-post" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-md hidden transition-opacity">
+        <div class="glass-panel w-full max-w-lg rounded-3xl p-6 border border-purple-300 dark:border-purple-500/30 shadow-2xl relative space-y-4 max-h-[90vh] overflow-y-auto">
+            <button onclick="closePostModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 dark:hover:text-slate-100 p-2">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <div class="space-y-1">
+                <h3 class="font-cyber text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                    <i class="fa-solid fa-plus-circle text-purple-600"></i> Đăng Đồ Cũ (AI Thẩm Định)
+                </h3>
+            </div>
+
+            <form id="form-post-item" onsubmit="handlePostSubmit(event)" class="space-y-3 text-xs md:text-sm">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Tên hoặc mô tả sơ lược món đồ</label>
+                    <div class="flex gap-2">
+                        <input type="text" id="post-title" required placeholder="VD: Áo khoác denim vintage size M..." class="flex-1 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3.5 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-purple-500 shadow-sm">
+                        <button type="button" onclick="analyzeItemWithAI()" id="btn-ai-analyze" class="px-3.5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs flex items-center gap-1.5 whitespace-nowrap transition-all shadow-md">
+                            <i class="fa-solid fa-sparkles text-amber-300"></i> AI Thẩm Định
+                        </button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Danh mục</label>
+                        <select id="post-category" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3.5 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-purple-500 shadow-sm">
+                            <option value="fashion">Thời Trang</option>
+                            <option value="decor">Decor Phòng</option>
+                            <option value="books">Sách Vở</option>
+                            <option value="accessories">Phụ Kiện & Tech</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Điểm Aura đề xuất</label>
+                        <input type="number" id="post-aura" required min="50" max="1000" value="150" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3.5 py-2.5 text-purple-700 dark:text-amber-400 font-cyber font-bold focus:outline-none focus:border-purple-500 shadow-sm">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Mô tả hấp dẫn</label>
+                    <textarea id="post-desc" rows="2" required placeholder="Mới 95%, phong cách cực chất..." class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3.5 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-purple-500 shadow-sm"></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Link Ảnh món đồ (URL)</label>
+                    <input type="url" id="post-image" required placeholder="https://images.unsplash.com/..." class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3.5 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-purple-500 shadow-sm">
+                </div>
+
+                <div class="pt-2">
+                    <button type="submit" class="w-full py-3.5 rounded-2xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs shadow-md shadow-purple-600/30 transition-all">
+                        🚀 Đăng Đồ & Cộng Điểm Aura
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL 2: AURA MESSENGER CHAT MOCKUP -->
+    <div id="modal-chat" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-md hidden transition-opacity">
+        <div class="glass-panel w-full max-w-md rounded-3xl p-5 border border-purple-300 dark:border-purple-500/30 shadow-2xl relative space-y-4 flex flex-col h-[500px]">
+            <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
+                <div class="flex items-center gap-3">
+                    <img id="chat-owner-avatar" src="" class="w-9 h-9 rounded-full object-cover border border-purple-500">
+                    <div>
+                        <h4 id="chat-owner-name" class="font-bold text-slate-900 dark:text-white text-xs">Chủ món đồ</h4>
+                        <span class="text-[10px] text-emerald-500 font-bold">🟢 Đang hoạt động trên Aura</span>
+                    </div>
+                </div>
+                <button onclick="closeChatModal()" class="text-slate-400 hover:text-slate-700 dark:hover:text-slate-100 p-2">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <div id="chat-item-banner" class="p-2.5 rounded-xl bg-purple-50 dark:bg-slate-900 border border-purple-200 dark:border-slate-800 flex items-center gap-3">
+                <img id="chat-item-img" src="" class="w-10 h-10 rounded-lg object-cover">
+                <div class="flex-1 overflow-hidden">
+                    <p id="chat-item-title" class="font-bold text-slate-900 dark:text-white text-xs truncate">Tên món đồ</p>
+                    <p id="chat-item-price" class="text-[10px] font-bold text-purple-600 dark:text-amber-400">0 Aura</p>
+                </div>
+            </div>
+
+            <div id="chat-messages-container" class="flex-1 overflow-y-auto space-y-3 p-2 text-xs">
+                <div class="flex justify-start">
+                    <div class="bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 p-3 rounded-2xl rounded-tl-none max-w-[80%]">
+                        Chào bạn! Món này còn nhé, bạn muốn hẹn trao đổi tại Trạm Aura Hub NEU hay khu vực nào nhỉ? 😊
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex gap-2 pt-2 border-t border-slate-200 dark:border-slate-800">
+                <input type="text" id="chat-input-text" placeholder="Nhập tin nhắn..." class="flex-1 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-purple-500">
+                <button onclick="sendChatMessage()" class="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-xl text-xs transition-all">
+                    <i class="fa-solid fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toast-container"></div>
+
+    <!-- JavaScript App Logic -->
+    <script>
+        const GEMINI_API_KEY = "";
+        const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${GEMINI_API_KEY}`;
+
+        // Gen Z Preset Avatars
+        const presetAvatars = [
+            { name: "Minh Đức", url: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80" },
+            { name: "Linh Nhi", url: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=200&auto=format&fit=crop&q=80" },
+            { name: "Hoàng Nam", url: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80" },
+            { name: "Thảo Phương", url: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&auto=format&fit=crop&q=80" },
+            { name: "Bảo Khánh", url: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&auto=format&fit=crop&q=80" },
+            { name: "Hà Anh", url: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=200&auto=format&fit=crop&q=80" }
+        ];
+
+        // Stations Google Maps Database
+        const auraStations = [
+            {
+                id: 1,
+                name: "Aura Hub ĐH Kinh Tế Quốc Dân (NEU)",
+                type: "Trạm Chính A2",
+                address: "Sảnh Toà nhà A2, 207 Giải Phóng, Hai Bà Trưng, Hà Nội",
+                phone: "0988.123.456",
+                hours: "07:30 - 21:00",
+                capacity: "24 Tủ đồ thông minh",
+                mapEmbedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.6318853198886!2d105.84074507599787!3d21.00238498851415!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ac71231f479d%3A0xe13c690240368173!2sNational%20Economics%20University!5e0!3m2!1sen!2svn!4v1700000000000!5m2!1sen!2svn",
+                directionsUrl: "https://www.google.com/maps/dir/?api=1&destination=207+Giai+Phong+Hai+Ba+Trung+Hanoi"
+            },
+            {
+                id: 2,
+                name: "Aura Spot - Coffee House Chùa Bộc",
+                type: "Đối Tác Cafe",
+                address: "12 Chùa Bộc, Đống Đa, Hà Nội",
+                phone: "0977.888.999",
+                hours: "07:00 - 22:30",
+                capacity: "Ưu đãi 15% đồ uống",
+                mapEmbedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.5262335431613!2d105.82718107599805!3d21.007604188370908!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ac80829864d3%3A0x6b77242d5fcfc88e!2sCh%C3%B9a%20B%E1%BB%99c%2C%20%C1%90%E1%BB%91ng%20%C1%90a%2C%20H%C0%A0%20N%E1%BB%99i!5e0!3m2!1sen!2svn!4v1700000000001!5m2!1sen!2svn",
+                directionsUrl: "https://www.google.com/maps/dir/?api=1&destination=Chua+Boc+Dong+Da+Hanoi"
+            },
+            {
+                id: 3,
+                name: "Aura Spot - Thư Viện Tạ Quang Bửu (HUST)",
+                type: "Trạm Đại Học",
+                address: "Số 1 Đại Cồ Việt, Hai Bà Trưng, Hà Nội",
+                phone: "0966.555.444",
+                hours: "08:00 - 20:00",
+                capacity: "Trạm sách giáo trình",
+                mapEmbedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.6062771239634!2d105.8413150759979!3d21.003658588480393!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ac76921319c5%3A0xb3e64d27f80907d8!2sHanoi%20University%20of%20Science%20and%20Technology!5e0!3m2!1sen!2svn!4v1700000000002!5m2!1sen!2svn",
+                directionsUrl: "https://www.google.com/maps/dir/?api=1&destination=1+Dai+Co+Viet+Hai+Ba+Trung+Hanoi"
+            }
+        ];
+
+        // Global State
+        const state = {
+            user: {
+                id: 'current_user',
+                name: "Minh Đức",
+                school: "NEU",
+                schoolFull: "ĐH Kinh Tế Quốc Dân (NEU)",
+                bio: "Thánh tái chế Gen Z, chuyên săn đồ Vintage & lan tỏa lối sống xanh cùng Aura.",
+                phone: "0912 345 678",
+                social: "@duc.neu.vintage",
+                auraPoints: 2450,
+                rank: "Aura God",
+                avatar: presetAvatars[0].url,
+                cardTheme: "purple",
+                exchangedItemsCount: 18,
+                streakDays: 4,
+                hasClaimedStreakToday: false
+            },
+            quests: [
+                { id: 1, title: "Đăng 1 món đồ cũ kèm AI thẩm định", aura: 50, completed: false },
+                { id: 2, title: "Đổi 1 món đồ tại Trạm Aura Hub", aura: 80, completed: false },
+                { id: 3, title: "Chia sẻ Chứng nhận Eco lên Mạng Xã Hội", aura: 30, completed: true }
+            ],
+            items: [
+                {
+                    id: 1,
+                    title: "Áo Jacket Denim Y2K Vintage",
+                    category: "fashion",
+                    aura: 220,
+                    owner: "An Trâm (NEU K64)",
+                    ownerAvatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=120&auto=format&fit=crop&q=80",
+                    image: "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=500&auto=format&fit=crop&q=80",
+                    desc: "Size M oversize Y2K chuẩn vintage. Hẹn giao dịch tại Sảnh A2 Hub NEU.",
+                    condition: "Like New 95%"
+                },
+                {
+                    id: 2,
+                    title: "Đèn Sunset Projector Chill Phòng",
+                    category: "decor",
+                    aura: 180,
+                    owner: "Hoàng Nam",
+                    ownerAvatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&auto=format&fit=crop&q=80",
+                    image: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=500&auto=format&fit=crop&q=80",
+                    desc: "Đèn hoàng hôn chụp ảnh siêu chill, đầy đủ cáp sạc USB.",
+                    condition: "Mới 99%"
+                },
+                {
+                    id: 3,
+                    title: "Sách 'Atomic Habits' Bìa Cứng Đẹp",
+                    category: "books",
+                    aura: 120,
+                    owner: "Linh Nhi",
+                    ownerAvatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=120&auto=format&fit=crop&q=80",
+                    image: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=500&auto=format&fit=crop&q=80",
+                    desc: "Bản tiếng Việt bìa cứng xịn mịn, chưa nếp gấp. Tặng kèm bookmark xinh xắn.",
+                    condition: "Mới 99%"
+                },
+                {
+                    id: 4,
+                    title: "Headphone Bluetooth Retro Style",
+                    category: "accessories",
+                    aura: 350,
+                    owner: "Bảo Khánh",
+                    ownerAvatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=120&auto=format&fit=crop&q=80",
+                    image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&auto=format&fit=crop&q=80",
+                    desc: "Tai nghe màu kem vintage, âm bass êm, pin trâu 25 tiếng.",
+                    condition: "Like New 92%"
+                }
+            ],
+            leaderboardData: [
+                { id: 'usr_1', name: "Nguyễn Hải Đăng", school: "NEU", schoolFull: "ĐH Kinh Tế Quốc Dân", aura: 3820, exchanged: 32, streak: 12, avatar: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=120&auto=format&fit=crop&q=80", rankTitle: "Chúa Tể Eco" },
+                { id: 'usr_2', name: "Trần Thảo Phương", school: "FTU", schoolFull: "ĐH Ngoại Thương", aura: 3410, exchanged: 28, streak: 9, avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=120&auto=format&fit=crop&q=80", rankTitle: "Chiến Thần Tái Chế" },
+                { id: 'usr_3', name: "Lê Hoàng Nam", school: "HUST", schoolFull: "ĐH Bách Khoa HN", aura: 2950, exchanged: 24, streak: 8, avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&auto=format&fit=crop&q=80", rankTitle: "Aura Legend" },
+                { id: 'usr_4', name: "Phạm Linh Nhi", school: "ULIS", schoolFull: "ĐH Ngoại Ngữ - VNU", aura: 2310, exchanged: 16, streak: 6, avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=120&auto=format&fit=crop&q=80", rankTitle: "Aura Master" },
+                { id: 'usr_5', name: "Đặng Bảo Khánh", school: "NEU", schoolFull: "ĐH Kinh Tế Quốc Dân", aura: 2180, exchanged: 15, streak: 5, avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=120&auto=format&fit=crop&q=80", rankTitle: "Thánh Vintage" },
+                { id: 'usr_6', name: "Vũ Mai Anh", school: "FTU", schoolFull: "ĐH Ngoại Thương", aura: 1940, exchanged: 14, streak: 4, avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&auto=format&fit=crop&q=80", rankTitle: "Sứ Giả Xanh" },
+                { id: 'usr_7', name: "Ngô Quốc Anh", school: "HUST", schoolFull: "ĐH Bách Khoa HN", aura: 1820, exchanged: 12, streak: 7, avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=120&auto=format&fit=crop&q=80", rankTitle: "Aura Pro" },
+                { id: 'usr_8', name: "Hoàng Bảo Ngọc", school: "ULIS", schoolFull: "ĐH Ngoại Ngữ", aura: 1650, exchanged: 11, streak: 3, avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=120&auto=format&fit=crop&q=80", rankTitle: "Member Uy Tín" },
+                { id: 'usr_9', name: "Bùi Tuấn Kiệt", school: "NEU", schoolFull: "ĐH Kinh Tế Quốc Dân", aura: 1510, exchanged: 10, streak: 5, avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&auto=format&fit=crop&q=80", rankTitle: "Member Uy Tín" },
+                { id: 'usr_10', name: "Đỗ Kim Cúc", school: "FTU", schoolFull: "ĐH Ngoại Thương", aura: 1390, exchanged: 9, streak: 2, avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=120&auto=format&fit=crop&q=80", rankTitle: "Eco Rookie" }
+            ],
+            leaderboardTimeFilter: 'all',
+            activeCategory: 'all',
+            activeSearchQuery: '',
+            currentActiveChatItem: null
+        };
+
+        // --- DAILY STREAK & QUEST FUNCTIONS ---
+        function claimDailyStreak() {
+            if (state.user.hasClaimedStreakToday) {
+                showToast("Bạn đã điểm danh hôm nay rồi! Hãy quay lại vào ngày mai nhé ⚡", "error");
+                return;
+            }
+            state.user.hasClaimedStreakToday = true;
+            state.user.streakDays += 1;
+            const streakBonus = 40;
+            state.user.auraPoints += streakBonus;
+
+            document.getElementById('streak-days-count').innerText = `${state.user.streakDays} Ngày`;
+            const btn = document.getElementById('btn-claim-streak');
+            btn.innerHTML = `<i class="fa-solid fa-check-circle"></i> Đã Điểm Danh Hôm Nay!`;
+            btn.classList.remove('bg-emerald-600', 'hover:bg-emerald-700');
+            btn.classList.add('bg-slate-400', 'cursor-not-allowed');
+            btn.disabled = true;
+
+            updateUserUI();
+            renderLeaderboard();
+            showToast(`🔥 Chuỗi Streak ${state.user.streakDays} ngày! Nhận +${streakBonus} Aura!`);
+            confetti({ particleCount: 70, spread: 60 });
+        }
+
+        function renderQuestsList() {
+            const container = document.getElementById('quests-list');
+            if (!container) return;
+            container.innerHTML = '';
+            state.quests.forEach(q => {
+                const item = document.createElement('div');
+                item.className = "p-4 rounded-2xl glass-panel flex items-center justify-between shadow-sm border border-slate-200 dark:border-slate-800";
+                item.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-xl ${q.completed ? 'bg-emerald-500/10 text-emerald-500' : 'bg-purple-500/10 text-purple-600'} flex items-center justify-center font-bold text-sm">
+                            <i class="${q.completed ? 'fa-solid fa-check' : 'fa-solid fa-star'}"></i>
+                        </div>
+                        <div>
+                            <p class="font-bold text-slate-900 dark:text-white text-xs md:text-sm">${q.title}</p>
+                            <span class="text-[10px] text-amber-500 font-bold">+${q.aura} Aura</span>
+                        </div>
+                    </div>
+                    <button onclick="completeQuest(${q.id})" ${q.completed ? 'disabled' : ''} class="px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+                        q.completed ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 cursor-default' : 'bg-purple-600 hover:bg-purple-700 text-white shadow'
+                    }">
+                        ${q.completed ? 'Đã Nhận' : 'Thực Hiện'}
+                    </button>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        function completeQuest(questId) {
+            const q = state.quests.find(item => item.id === questId);
+            if (!q || q.completed) return;
+            q.completed = true;
+            state.user.auraPoints += q.aura;
+            updateUserUI();
+            renderQuestsList();
+            renderLeaderboard();
+            showToast(`✨ Hoàn thành nhiệm vụ: "${q.title}"! Nhận +${q.aura} Aura!`);
+            confetti({ particleCount: 50 });
+        }
+
+        // --- ECO IMPACT CALCULATOR ---
+        function calculatePersonalImpact() {
+            const fashion = parseInt(document.getElementById('calc-fashion').value) || 0;
+            const decor = parseInt(document.getElementById('calc-decor').value) || 0;
+            const books = parseInt(document.getElementById('calc-books').value) || 0;
+
+            const co2Saved = (fashion * 3.5 + decor * 2.2 + books * 1.1).toFixed(1);
+            const waterSaved = (fashion * 1800 + decor * 900 + books * 400).toLocaleString();
+
+            document.getElementById('calc-co2-result').innerText = `${co2Saved} kg`;
+            document.getElementById('calc-water-result').innerText = `${waterSaved} Lít`;
+        }
+
+        function shareImpactCertificate() {
+            showToast("🌱 Đã sao chép liên kết Chứng nhận Eco Tác động Môi trường!");
+            confetti({ particleCount: 30 });
+        }
+
+        // --- MARKETPLACE FILTERS & SEARCH ---
+        function filterCategory(cat) {
+            state.activeCategory = cat;
+            document.querySelectorAll('.cat-btn').forEach(btn => {
+                btn.classList.remove('bg-purple-600', 'text-white', 'shadow-sm');
+                btn.classList.add('bg-slate-100', 'dark:bg-slate-800', 'text-slate-700', 'dark:text-slate-300');
+            });
+            event.currentTarget.classList.add('bg-purple-600', 'text-white', 'shadow-sm');
+            event.currentTarget.classList.remove('bg-slate-100', 'dark:bg-slate-800', 'text-slate-700', 'dark:text-slate-300');
+            renderItems(state.activeCategory, state.activeSearchQuery);
+        }
+
+        function handleSearch() {
+            state.activeSearchQuery = document.getElementById('search-input').value.trim();
+            renderItems(state.activeCategory, state.activeSearchQuery);
+        }
+
+        // --- POST ITEM & AI ANALYSIS ---
+        function openPostModal() {
+            document.getElementById('modal-post').classList.remove('hidden');
+        }
+
+        function closePostModal() {
+            document.getElementById('modal-post').classList.add('hidden');
+        }
+
+        function analyzeItemWithAI() {
+            const title = document.getElementById('post-title').value.trim();
+            if (!title) {
+                showToast("Vui lòng nhập tên món đồ trước khi thẩm định AI!", "error");
+                return;
+            }
+            const btn = document.getElementById('btn-ai-analyze');
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> Đang Thẩm Định...`;
+
+            setTimeout(() => {
+                const estimatedAura = Math.floor(Math.random() * 150) + 120;
+                document.getElementById('post-aura').value = estimatedAura;
+                document.getElementById('post-desc').value = `[AI Thẩm Định]: Món đồ "${title}" còn mới, phong cách Gen Z độc đáo. Rất thích hợp để giao dịch tại trạm Aura Hub!`;
+                btn.disabled = false;
+                btn.innerHTML = `<i class="fa-solid fa-sparkles text-amber-300"></i> AI Thẩm Định`;
+                showToast(`🤖 AI đã gợi ý ${estimatedAura} Aura & viết mô tả phù hợp!`);
+            }, 800);
+        }
+
+        function handlePostSubmit(e) {
+            e.preventDefault();
+            const title = document.getElementById('post-title').value.trim();
+            const category = document.getElementById('post-category').value;
+            const aura = parseInt(document.getElementById('post-aura').value) || 100;
+            const desc = document.getElementById('post-desc').value.trim();
+            const image = document.getElementById('post-image').value.trim();
+
+            const newItem = {
+                id: Date.now(),
+                title: title,
+                category: category,
+                aura: aura,
+                owner: `${state.user.name} (${state.user.school})`,
+                ownerAvatar: state.user.avatar,
+                image: image,
+                desc: desc,
+                condition: "Like New"
+            };
+
+            state.items.unshift(newItem);
+            state.user.auraPoints += 50; // Award 50 bonus Aura for posting
+            updateUserUI();
+            renderItems(state.activeCategory, state.activeSearchQuery);
+            renderLeaderboard();
+            closePostModal();
+            showToast("🚀 Đăng món đồ thành công! Nhận +50 Aura thưởng đăng bài!");
+            confetti({ particleCount: 60 });
+        }
+
+        // --- AURA MESSENGER CHAT MOCKUP ---
+        function openChatModal(itemId) {
+            const item = state.items.find(i => i.id === itemId);
+            if (!item) return;
+            state.currentActiveChatItem = item;
+
+            document.getElementById('chat-owner-name').innerText = item.owner;
+            document.getElementById('chat-owner-avatar').src = item.ownerAvatar;
+            document.getElementById('chat-item-title').innerText = item.title;
+            document.getElementById('chat-item-price').innerText = `${item.aura} Aura`;
+            document.getElementById('chat-item-img').src = item.image;
+
+            const container = document.getElementById('chat-messages-container');
+            container.innerHTML = `
+                <div class="flex justify-start">
+                    <div class="bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 p-3 rounded-2xl rounded-tl-none max-w-[80%]">
+                        Chào bạn! Món "${item.title}" này còn nhé. Bạn muốn hẹn trao đổi tại Trạm Aura Hub NEU hay khu vực nào nhỉ? 😊
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('modal-chat').classList.remove('hidden');
+        }
+
+        function closeChatModal() {
+            document.getElementById('modal-chat').classList.add('hidden');
+        }
+
+        function sendChatMessage() {
+            const input = document.getElementById('chat-input-text');
+            const text = input.value.trim();
+            if (!text) return;
+
+            const container = document.getElementById('chat-messages-container');
+            const userMsg = document.createElement('div');
+            userMsg.className = "flex justify-end";
+            userMsg.innerHTML = `
+                <div class="bg-purple-600 text-white p-3 rounded-2xl rounded-tr-none max-w-[80%]">
+                    ${text}
+                </div>
+            `;
+            container.appendChild(userMsg);
+            input.value = '';
+            container.scrollTop = container.scrollHeight;
+
+            // Auto reply mock
+            setTimeout(() => {
+                const replyMsg = document.createElement('div');
+                replyMsg.className = "flex justify-start";
+                replyMsg.innerHTML = `
+                    <div class="bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 p-3 rounded-2xl rounded-tl-none max-w-[80%]">
+                        Okie chốt deal nhé! Hẹn gặp bạn ở trạm Aura Hub tầm 5h chiều nay nè ✨
+                    </div>
+                `;
+                container.appendChild(replyMsg);
+                container.scrollTop = container.scrollHeight;
+            }, 1000);
+        }
+
+        // --- MYSTERY BOX REWARD ---
+        function openMysteryBox() {
+            if (state.user.auraPoints < 300) {
+                showToast("Bạn cần ít nhất 300 Aura để mở Mystery Box!", "error");
+                return;
+            }
+            state.user.auraPoints -= 300;
+            updateUserUI();
+
+            const rewards = [
+                "Voucher giảm 50% Cafe tại Aura Spot",
+                "Gói Sticker Vintage Gen Z Độc Bản",
+                "Thưởng Thêm +500 Aura Thần Thái",
+                "Huy Hiệu VIP Eco Ambassador"
+            ];
+            const prize = rewards[Math.floor(Math.random() * rewards.length)];
+
+            confetti({ particleCount: 120, spread: 80, origin: { y: 0.6 } });
+            showToast(`🎉 CHÚC MỪNG! Bạn đã trúng: ${prize}!`);
+            renderLeaderboard();
+        }
+
+        // --- LOCAL STORAGE PROFILE & APP INITIALIZATION ---
+        function loadStoredProfile() {
+            const saved = localStorage.getItem('aura_user_profile');
+            if (saved) {
+                try {
+                    const parsed = JSON.parse(saved);
+                    state.user = { ...state.user, ...parsed };
+                } catch(e) { console.error(e); }
+            }
+        }
+
+        function saveProfileToStorage() {
+            localStorage.setItem('aura_user_profile', JSON.stringify(state.user));
+        }
+
+        function filterLeaderboardTime(timeframe) {
+            state.leaderboardTimeFilter = timeframe;
+            document.querySelectorAll('.lb-time-btn').forEach(btn => {
+                btn.classList.remove('bg-purple-600', 'text-white', 'shadow');
+                btn.classList.add('text-slate-600', 'dark:text-slate-400');
+            });
+            const activeBtn = document.getElementById(`lb-time-${timeframe}`);
+            if(activeBtn) {
+                activeBtn.classList.add('bg-purple-600', 'text-white', 'shadow');
+                activeBtn.classList.remove('text-slate-600', 'dark:text-slate-400');
+            }
+            renderLeaderboard();
+        }
+
+        function renderLeaderboard() {
+            const schoolFilter = document.getElementById('lb-school-select').value;
+            
+            let allMembers = [...state.leaderboardData];
+            allMembers = allMembers.filter(m => m.id !== 'current_user');
+            allMembers.push({
+                id: 'current_user',
+                name: state.user.name,
+                school: state.user.school || 'NEU',
+                schoolFull: state.user.schoolFull || 'ĐH Kinh Tế Quốc Dân',
+                aura: state.user.auraPoints,
+                exchanged: state.user.exchangedItemsCount || 18,
+                streak: state.user.streakDays || 4,
+                avatar: state.user.avatar,
+                rankTitle: state.user.rank || 'Aura God'
+            });
+
+            if(state.leaderboardTimeFilter === 'month') {
+                allMembers = allMembers.map(m => ({ ...m, aura: Math.floor(m.aura * 0.65) }));
+            } else if(state.leaderboardTimeFilter === 'week') {
+                allMembers = allMembers.map(m => ({ ...m, aura: Math.floor(m.aura * 0.25) }));
+            }
+
+            if (schoolFilter !== 'all') {
+                allMembers = allMembers.filter(m => m.school.toUpperCase() === schoolFilter.toUpperCase());
+            }
+
+            allMembers.sort((a, b) => b.aura - a.aura);
+            allMembers.forEach((m, idx) => m.currentRank = idx + 1);
+
+            const podiumContainer = document.getElementById('top-podium-container');
+            podiumContainer.innerHTML = '';
+
+            const top3 = allMembers.slice(0, 3);
+            if (top3.length > 0) {
+                const displayOrder = [];
+                if(top3[1]) displayOrder.push({ member: top3[1], pos: 2, medal: '🥈', color: 'from-slate-300 to-slate-400 text-slate-800' });
+                if(top3[0]) displayOrder.push({ member: top3[0], pos: 1, medal: '👑 TOP 1', color: 'from-amber-400 via-amber-500 to-yellow-600 text-slate-950 scale-105 z-10' });
+                if(top3[2]) displayOrder.push({ member: top3[2], pos: 3, medal: '🥉', color: 'from-amber-700 to-amber-800 text-white' });
+
+                displayOrder.forEach(item => {
+                    const m = item.member;
+                    const isUser = m.id === 'current_user';
+                    const podCard = document.createElement('div');
+                    podCard.className = `glass-panel rounded-3xl p-5 text-center flex flex-col items-center justify-between shadow-xl relative overflow-hidden transition-all hover:scale-105 ${isUser ? 'ring-4 ring-purple-500' : ''}`;
+                    podCard.innerHTML = `
+                        <div class="absolute top-0 inset-x-0 h-2.5 bg-gradient-to-r ${item.color}"></div>
+                        <span class="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-gradient-to-r ${item.color} shadow-sm mb-3">
+                            ${item.medal}
+                        </span>
+                        <div class="relative mb-2">
+                            <img src="${m.avatar}" class="w-16 h-16 rounded-2xl object-cover border-2 border-amber-400 shadow-md">
+                            ${isUser ? '<span class="absolute -bottom-1 -right-1 bg-purple-600 text-white text-[9px] font-black px-1.5 py-0.5 rounded-full">BẠN</span>' : ''}
+                        </div>
+                        <h4 class="font-bold text-slate-900 dark:text-white text-sm line-clamp-1">${m.name}</h4>
+                        <p class="text-[11px] text-purple-600 dark:text-purple-400 font-bold">${m.schoolFull}</p>
+                        <div class="mt-3 w-full py-2 rounded-xl bg-purple-50 dark:bg-slate-900 border border-purple-200 dark:border-slate-800">
+                            <p class="font-cyber font-black text-amber-500 text-base">${m.aura.toLocaleString()} <span class="text-[10px] font-bold text-slate-400">AURA</span></p>
+                        </div>
+                    `;
+                    podiumContainer.appendChild(podCard);
+                });
+            }
+
+            const userIndex = allMembers.findIndex(m => m.id === 'current_user');
+            const userRankData = userIndex !== -1 ? allMembers[userIndex] : null;
+            const personalBanner = document.getElementById('personal-rank-banner');
+
+            if (userRankData && personalBanner) {
+                personalBanner.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-2xl bg-purple-600 text-white flex items-center justify-center font-black text-sm shadow-md">
+                            #${userRankData.currentRank}
+                        </div>
+                        <div>
+                            <h4 class="font-extrabold text-slate-900 dark:text-white text-xs md:text-sm flex items-center gap-2">
+                                <span>Thứ Hạng Hiện Tại Của Bạn (${userRankData.name})</span>
+                                <span class="px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-700 dark:text-purple-300 text-[10px] font-bold">VIP MEMBER</span>
+                            </h4>
+                            <p class="text-[11px] text-slate-500 dark:text-slate-400">
+                                ${userRankData.schoolFull} • Đã đổi ${userRankData.exchanged} món đồ • Streak ${userRankData.streak} Ngày
+                            </p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-[10px] font-bold text-slate-500 uppercase">Điểm Aura</p>
+                        <p class="font-cyber font-black text-amber-500 text-lg md:text-xl">${userRankData.aura.toLocaleString()}</p>
+                    </div>
+                `;
+            }
+
+            const tableBody = document.getElementById('leaderboard-table-body');
+            tableBody.innerHTML = '';
+
+            const tableMembers = allMembers.slice(3);
+            if(tableMembers.length === 0) {
+                tableBody.innerHTML = `<tr><td colspan="6" class="p-6 text-center text-slate-400">Không có dữ liệu phù hợp với bộ lọc trường.</td></tr>`;
+                return;
+            }
+
+            tableMembers.forEach(m => {
+                const isUser = m.id === 'current_user';
+                const tr = document.createElement('tr');
+                tr.className = `hover:bg-purple-50/50 dark:hover:bg-slate-800/50 transition-colors ${isUser ? 'bg-purple-100/60 dark:bg-purple-950/40 font-bold border-l-4 border-purple-600' : ''}`;
+                tr.innerHTML = `
+                    <td class="p-3.5 text-center font-black ${m.currentRank <= 5 ? 'text-amber-500' : 'text-slate-400'}">
+                        #${m.currentRank}
+                    </td>
+                    <td class="p-3.5">
+                        <div class="flex items-center gap-3">
+                            <img src="${m.avatar}" class="w-8 h-8 rounded-xl object-cover border border-purple-400">
+                            <div>
+                                <p class="font-bold text-slate-900 dark:text-white text-xs ${isUser ? 'text-purple-600 dark:text-purple-400' : ''}">
+                                    ${m.name} ${isUser ? '<span class="ml-1 text-[9px] bg-purple-600 text-white px-1.5 py-0.2 rounded-full font-black">BẠN</span>' : ''}
+                                </p>
+                                <p class="text-[10px] text-slate-400 font-medium md:hidden">${m.schoolFull}</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="p-3.5 hidden md:table-cell text-slate-600 dark:text-slate-300 font-medium">
+                        ${m.schoolFull}
+                    </td>
+                    <td class="p-3.5 text-center font-bold text-slate-700 dark:text-slate-300">
+                        ${m.exchanged} món
+                    </td>
+                    <td class="p-3.5 text-center">
+                        <span class="px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 font-extrabold text-[10px]">
+                            🔥 ${m.streak} Ngày
+                        </span>
+                    </td>
+                    <td class="p-3.5 text-right pr-6 font-cyber font-black text-amber-600 dark:text-amber-400 text-sm">
+                        ${m.aura.toLocaleString()}
+                    </td>
+                `;
+                tableBody.appendChild(tr);
+            });
+        }
+
+        function selectStation(stationId) {
+            const st = auraStations.find(s => s.id === stationId);
+            if (!st) return;
+
+            document.getElementById('google-maps-iframe').src = st.mapEmbedUrl;
+            document.getElementById('btn-directions-link').href = st.directionsUrl;
+            document.getElementById('active-station-title').innerText = st.name;
+            document.getElementById('active-station-detail').innerHTML = `📍 ${st.address} - Hotline: <strong class="text-purple-600 dark:text-purple-400 font-bold">${st.phone}</strong>`;
+
+            [1, 2, 3].forEach(id => {
+                const el = document.getElementById(`station-card-${id}`);
+                if (id === stationId) {
+                    el.classList.remove('opacity-80');
+                    el.classList.add('opacity-100', 'ring-2', 'ring-purple-500');
+                } else {
+                    el.classList.add('opacity-80');
+                    el.classList.remove('opacity-100', 'ring-2', 'ring-purple-500');
+                }
+            });
+
+            showToast(`📍 Đã chuyển vị trí xem sang: ${st.name}`);
+        }
+
+        function locateNearestStation() {
+            if ("geolocation" in navigator) {
+                navigator.geolocation.getCurrentPosition(() => {
+                    showToast("📍 Vị trí gần bạn nhất: Aura Hub NEU (A2) - Cách bạn 650m!");
+                    selectStation(1);
+                }, () => {
+                    showToast("📍 Đã định vị Trạm Aura Hub NEU gần khu vực của bạn!");
+                    selectStation(1);
+                });
+            } else {
+                selectStation(1);
+            }
+        }
+
+        function initProfileForm() {
+            document.getElementById('edit-user-name').value = state.user.name;
+            document.getElementById('edit-user-school').value = state.user.schoolFull || state.user.school;
+            document.getElementById('edit-user-bio').value = state.user.bio;
+            document.getElementById('edit-user-phone').value = state.user.phone;
+            document.getElementById('edit-user-social').value = state.user.social;
+
+            initPresetAvatars();
+            updateProfileLive();
+            changeCardTheme(state.user.cardTheme || 'purple');
+        }
+
+        function updateProfileLive() {
+            const name = document.getElementById('edit-user-name').value.trim() || "Thành Viên Aura";
+            const school = document.getElementById('edit-user-school').value.trim() || "Thành Viên Sinh Thái";
+            const bio = document.getElementById('edit-user-bio').value.trim() || "Yêu thích lối sống xanh Gen Z.";
+            const phone = document.getElementById('edit-user-phone').value.trim() || "Chưa cập nhật";
+            const social = document.getElementById('edit-user-social').value.trim() || "@aura.member";
+
+            document.getElementById('card-username').innerText = name;
+            document.getElementById('card-school-badge').innerText = school;
+            document.getElementById('card-ai-bio').innerText = `"${bio}"`;
+            document.getElementById('card-phone-number').innerHTML = `<i class="fa-solid fa-phone mr-1"></i> ${phone}`;
+            document.getElementById('card-social-handle').innerHTML = `<i class="fa-brands fa-instagram mr-1"></i> ${social}`;
+        }
+
+        function saveProfileChanges(e) {
+            e.preventDefault();
+            state.user.name = document.getElementById('edit-user-name').value.trim();
+            const fullSchool = document.getElementById('edit-user-school').value.trim();
+            state.user.schoolFull = fullSchool;
+            state.user.school = fullSchool.includes('NEU') ? 'NEU' : fullSchool.includes('HUST') ? 'HUST' : fullSchool.includes('FTU') ? 'FTU' : 'Khác';
+            state.user.bio = document.getElementById('edit-user-bio').value.trim();
+            state.user.phone = document.getElementById('edit-user-phone').value.trim();
+            state.user.social = document.getElementById('edit-user-social').value.trim();
+
+            saveProfileToStorage();
+            updateUserUI();
+            renderLeaderboard();
+            showToast("✨ Đã lưu cập nhật Hồ sơ Cá nhân thành công!");
+            confetti({ particleCount: 40 });
+        }
+
+        function changeCardTheme(themeName) {
+            state.user.cardTheme = themeName;
+            const card = document.getElementById('digital-aura-card');
+            card.className = `rounded-3xl p-6 shadow-2xl border border-white/20 relative overflow-hidden transition-all duration-300 card-theme-${themeName}`;
+        }
+
+        function generateAIPersona() {
+            const bios = [
+                "Thánh săn đồ Vintage đỉnh cao, bảo vệ môi trường chuẩn Gen Z!",
+                "Sống xanh không khó, tích Aura cực vui! Chuyên gia decor phòng chill.",
+                "Tối giản lối sống, tối đa thần thái Aura. Rất vui được trao đổi đồ cũ!",
+                "Đam mê thời trang Y2K & tái chế đồ xinh xắn tại Hub NEU."
+            ];
+            const randomBio = bios[Math.floor(Math.random() * bios.length)];
+            document.getElementById('edit-user-bio').value = randomBio;
+            updateProfileLive();
+            showToast("🤖 AI đã tạo câu Bio Gen Z cực cool cho bạn!");
+        }
+
+        function initPresetAvatars() {
+            const container = document.getElementById('preset-avatars-container');
+            container.innerHTML = '';
+            presetAvatars.forEach(av => {
+                const img = document.createElement('img');
+                img.src = av.url;
+                img.className = "w-9 h-9 rounded-full object-cover border-2 border-slate-300 dark:border-slate-700 cursor-pointer hover:border-purple-600 hover:scale-110 transition-all shrink-0";
+                img.onclick = () => selectPresetAvatar(av.url);
+                container.appendChild(img);
+            });
+        }
+
+        function selectPresetAvatar(url) {
+            state.user.avatar = url;
+            document.getElementById('card-avatar').src = url;
+            showToast("✨ Đã cập nhật Avatar mới cho Thẻ VIP!");
+        }
+
+        function handleAvatarUpload(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    selectPresetAvatar(evt.target.result);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.add('hidden'));
+            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('bg-purple-600', 'text-white', 'shadow-md');
+                btn.classList.add('text-slate-600', 'dark:text-slate-300');
+            });
+            const activeNav = document.getElementById(`nav-${tabId}`);
+            if (activeNav) {
+                activeNav.classList.add('bg-purple-600', 'text-white', 'shadow-md');
+                activeNav.classList.remove('text-slate-600', 'dark:text-slate-300');
+            }
+
+            if(tabId === 'leaderboard') {
+                renderLeaderboard();
+            }
+        }
+
+        function applyTheme(isLight) {
+            const html = document.documentElement;
+            const themeIcon = document.getElementById('theme-icon');
+            const themeText = document.getElementById('theme-text');
+
+            if (isLight) {
+                html.classList.add('light');
+                html.classList.remove('dark');
+                themeIcon.className = 'fa-solid fa-sun text-amber-600 text-sm';
+                themeText.innerText = 'LIGHT';
+            } else {
+                html.classList.remove('light');
+                html.classList.add('dark');
+                themeIcon.className = 'fa-solid fa-moon text-indigo-400 text-sm';
+                themeText.innerText = 'DARK';
+            }
+        }
+
+        document.getElementById('theme-toggle').addEventListener('click', () => {
+            const isCurrentlyLight = document.documentElement.classList.contains('light');
+            applyTheme(!isCurrentlyLight);
+        });
+
+        function renderItems(filterCat = 'all', searchQuery = '') {
+            const grid = document.getElementById('items-grid');
+            if(!grid) return;
+            grid.innerHTML = '';
+
+            const filtered = state.items.filter(item => {
+                const matchCat = filterCat === 'all' || item.category === filterCat;
+                const matchSearch = item.title.toLowerCase().includes(searchQuery.toLowerCase());
+                return matchCat && matchSearch;
+            });
+
+            filtered.forEach(item => {
+                const card = document.createElement('div');
+                card.className = "glass-card rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl flex flex-col justify-between group";
+                card.innerHTML = `
+                    <div>
+                        <div class="relative h-48 overflow-hidden bg-slate-100 dark:bg-slate-900">
+                            <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-white/90 dark:bg-slate-950/80 backdrop-blur-md border border-purple-500/20 text-[10px] font-bold text-purple-700 dark:text-amber-400">
+                                ⚡ ${item.aura} AURA
+                            </div>
+                        </div>
+                        <div class="p-4 space-y-2">
+                            <div class="flex items-center gap-2">
+                                <img src="${item.ownerAvatar}" class="w-6 h-6 rounded-full object-cover border border-purple-400">
+                                <span class="text-xs text-slate-500 font-medium truncate">${item.owner}</span>
+                            </div>
+                            <h3 class="font-bold text-slate-900 dark:text-slate-100 text-sm line-clamp-1">${item.title}</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2">${item.desc}</p>
+                        </div>
+                    </div>
+                    <div class="p-4 pt-0 grid grid-cols-2 gap-2">
+                        <button onclick="exchangeItem(${item.id}, ${item.aura})" class="py-2.5 rounded-xl bg-purple-600 text-white font-bold text-xs">
+                            <i class="fa-solid fa-arrows-rotate"></i> Đổi Đồ
+                        </button>
+                        <button onclick="openChatModal(${item.id})" class="py-2.5 rounded-xl bg-purple-50 text-purple-700 font-bold text-xs border border-purple-200">
+                            <i class="fa-solid fa-comments"></i> Deal Aura
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function exchangeItem(itemId, auraCost) {
+            if (state.user.auraPoints < auraCost) {
+                showToast("Bạn không đủ điểm Aura để đổi món đồ này!", "error");
+                return;
+            }
+            state.user.auraPoints -= auraCost;
+            state.user.exchangedItemsCount = (state.user.exchangedItemsCount || 0) + 1;
+            updateUserUI();
+            renderLeaderboard();
+            state.items = state.items.filter(i => i.id !== itemId);
+            renderItems(state.activeCategory, state.activeSearchQuery);
+            showToast(`🎉 Đổi đồ thành công! Đã dùng ${auraCost} Aura.`);
+            confetti({ particleCount: 50 });
+        }
+
+        function downloadDigitalCard() {
+            html2canvas(document.getElementById('digital-aura-card'), { scale: 2 }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = `${state.user.name}-AuraVIPCard.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+        }
+
+        function shareToStory() {
+            showToast("📲 Đã sao chép liên kết Thẻ VIP Aura để dán lên Story Instagram!");
+        }
+
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `glass-panel px-4 py-3 rounded-xl border text-xs font-semibold shadow-xl flex items-center gap-3 ${
+                type === 'error' ? 'border-red-500 text-red-600' : 'border-purple-500 text-slate-800 dark:text-slate-100'
+            }`;
+            toast.innerHTML = `<i class="fa-solid fa-sparkles text-amber-500"></i><span>${message}</span>`;
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        function updateUserUI() {
+            document.getElementById('user-aura-points').innerText = state.user.auraPoints.toLocaleString();
+            document.getElementById('card-points').innerText = state.user.auraPoints.toLocaleString();
+            document.getElementById('card-username').innerText = state.user.name;
+            document.getElementById('card-avatar').src = state.user.avatar;
+            document.getElementById('card-school-badge').innerText = state.user.schoolFull || state.user.school;
+        }
+
+        window.onload = function() {
+            loadStoredProfile();
+            applyTheme(true);
+            initProfileForm();
+            updateUserUI();
+            renderQuestsList();
+            renderItems();
+            renderLeaderboard();
+            selectStation(1);
+        };
+    </script>
+</body>
+</html>
